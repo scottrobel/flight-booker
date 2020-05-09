@@ -1,0 +1,24 @@
+<%= simple_form_for :flight, method: :get do |form| %>
+  <%= form.input :start_airport_id, collection: Airport.all, as: :select, label_method: :location_code, label: "From", selected: (params[:flight][:start_airport_id] rescue nil) %>
+  <%= form.input :end_airport_id, collection: Airport.all, as: :select, label_method: :location_code, label: "To", selected: (params[:flight][:end_airport_id] rescue nil) %>
+  <%= form.input :passengers, collection: (1..4).to_a, as: :select, label: 'Passengers', selected: (params[:flight][:passengers] rescue nil) %>
+  <%= form.input :flight_start_time, required: false, input_html: { type: 'date' }, label: 'Flight Date', selected: (params[:flight][:passengers] rescue nil) %>
+  <%= form.submit 'Search Flights' %>
+<% end %>
+<% if @booking %>
+  <%= simple_form_for @booking do |form| %>
+    <% if @flights || @booking.flight%>
+      <% (@flights || [@booking.flight]).each do |flight| %>
+        <%= form.radio_button :flight_id, flight.id, {checked: !!@booking.flight} %>
+        <%= render flight%>
+      <% end %>
+    <% end %>
+    
+    <%= form.fields_for :passengers do |passenger| %>
+      <div><%="Passenger #{passenger.index + 1}" %></div>
+      <%= passenger.input :name, type: :text %>
+      <%= passenger.input :email, type: :email %>
+    <% end %>
+    <%= form.submit 'Book Flight' %>
+  <% end %>
+<% end %>

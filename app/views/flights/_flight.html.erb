@@ -1,0 +1,7 @@
+<div>Start Location: <%= flight.from_airport.location_code %></div>
+<div>End Location: <%= flight.to_airport.location_code %></div>
+<div>Boarding Date: <%= flight.flight_start_time.strftime("%A %B %-d %Y") %></div>
+<div>Boarding Time: <%= flight.flight_start_time.strftime("%-I:%M %p") %></div>
+<div>Landing Date: <%= flight.landing_time.strftime("%A %B %-d %Y") %></div>
+<div>Landing Time: <%= flight.landing_time.strftime("%-I:%M %p") %></div>
+<div>Flight Duration: <%= flight.flight_duration.inspect %></div>
